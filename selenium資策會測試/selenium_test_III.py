@@ -20,6 +20,7 @@ from edit_data_III import edit
 from delete_data_III import delete, delete_workhour, delete_elec ,delete_steam
 from testcvaluate import value_test_2
 # from selenium.webdriver.common.action_chains import ActionChains
+import os
 
 def login_page(driver,user_id,user_pass):
         wait = WebDriverWait(driver, 10)
@@ -67,7 +68,9 @@ def login_page(driver,user_id,user_pass):
         link.click()
 
 def main(): 
-
+    log_file_path = 'autotest.log'
+    if os.path.exists(log_file_path):
+        os.remove(log_file_path)
     logging.basicConfig(
         filename='autotest.log',  # 指定日誌輸出的檔案名稱
         level=logging.INFO,  # 設定日誌級別（這裡設定為 INFO 級別，可以自行調整）
@@ -75,37 +78,35 @@ def main():
         datefmt='%Y-%m-%d %H:%M:%S'  # 設定日期格式
     )
 
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    chromedriver_path = os.path.join(current_dir, 'chromedriver-win64', 'chromedriver.exe')
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
-    # options.add_argument('-headless')
+    #options.add_argument('-headless')
     options.add_argument('--ignore-ssl-errors')
-    options.add_argument("--start-maximized") 
-    service = Service(executable_path='C:\\Users\\iou85\\Desktop\\selenium測試(固定)\\chromedriver-win64\\chromedriver.exe')
+    options.add_argument("--start-maximized")
+    options.add_argument('--disable-web-security')
+    options.add_argument('--ignore-certificate-errors')
+    service = Service(executable_path=chromedriver_path)
     driver = webdriver.Chrome(service=service, options=options)
     print("================================================================\n")
-    print("請問要測試的網站是 ??? 1.prod 2.demo2 3.地球醫生 4.9999 5.8888 ")
+    print("請問要測試的網站是 ??? 1.prod 2.demo2 3.中衛中心 4.8888 5.9999 ")
     print("請輸入 : \n")
     site_num = int(input())
     # site_num =1
-    site_dict={1:"https://prod.netzero.com.tw/project",2:"https://demo2.netzero.com.tw/project",3:"https://14064-1.com/project",4:"https://220.132.206.5:9999/project",5:"https://220.132.206.5:8888/project",6:"https://220.132.206.5:666/project",7:"https://csd.netzero.com.tw/project"}
+    site_dict={1:"https://prod.netzero.com.tw/project",2:"https://demo2.netzero.com.tw/project",3:"https://csd.netzero.com.tw/project",4:"https://220.132.206.5:8888/project",5:"https://220.132.206.5:9999/project"}
     url=site_dict[site_num]
     
     driver.get(url)  
-    if  site_num==3:      # 如果是iii or 9999登入帳密是 IIIII 跟 IIIIII
-        user_id='GHGINVCLASS' 
-        user_pass='0277289341'
-    elif site_num == 5 or site_num == 4:
-        user_id='user08000'
-        user_pass='IIIComany!55665566'
-    elif site_num == 1:
+    if  site_num==1:      # 如果是iii or 9999登入帳密是 IIIII 跟 IIIIII
         user_id='user30000'
         user_pass='IIIComany!55665566'
-    elif site_num == 7:
+    elif site_num == 3:
         user_id ='user_65c008'
         user_pass = 'IIIComany!55665566'
-    else:                               # 如果是公有雲 帳密都是 testCompany
-        user_id='testCompany'
-        user_pass='@Test123'
+    else :
+        user_id = 'user08000'
+        user_pass = 'IIIComany!55665566'
     login_page(driver,user_id,user_pass)   #自動登入至排放源輸入
     print("請問要自動測試何種功能? 1:新增 2:匯入舊有模版 3:匯入資策會模版 4:編輯 5:刪除 6:excel匯出 7:新增多個 8:計算總值" )
     func = int(input())

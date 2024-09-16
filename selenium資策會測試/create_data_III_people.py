@@ -30,7 +30,7 @@ value_to_send = ['A00', 'A000', 'B00', 'B000', 'C00', 'C000', 'D00', 'D000',
 
 def source_input_1(driver,url):
 
-    source_type = ['輸入電力 C2','輸入蒸汽 C2']
+    source_type = ['移動源 C1', '固定燃燒源 C1', '工業製程 C1', '人為逸散 C1', '其他關注類物質 C1', '輸入電力 C2']
 
     url = url+"/calculate/" 
     
