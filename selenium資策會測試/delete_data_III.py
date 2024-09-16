@@ -24,17 +24,12 @@ def delete(driver,url):
         else:
             element_text = element.text
             text_values.append(element_text)
-    common_texts = set(text_values) & set(source_type)
-    text_values = [text for text in text_values if text in common_texts]
-
     url = url+"/calculate/"  
     for i in source_type:
         if i == '人為逸散 C1':
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()     
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="工時計算 B.2.2.d"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="工時計算 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
             
@@ -43,7 +38,6 @@ def delete(driver,url):
             
             driver.get(url+'directFugitiveEmission') 
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="冷媒設備 B.2.2.d"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="冷媒設備 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
 
@@ -51,18 +45,15 @@ def delete(driver,url):
             delete_data(driver,url,i,1)
 
             driver.get(url+'directFugitiveEmission') 
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="消防設備 B.2.2.d"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="消防設備 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
 
             time.sleep(3)
             delete_data(driver,url,i,2)
         elif i =='輸入能源上游排放 C4':
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="輸入電力上游 B.5.2.a"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="輸入電力上游 B.5.2.a"]')))
             driver.execute_script("arguments[0].click()", element)
 
@@ -71,96 +62,113 @@ def delete(driver,url):
             
             driver.get(url+'upstreamEmissions') 
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="其他輸入能源上游 B.5.2.a"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="其他輸入能源上游 B.5.2.a"]')))
             driver.execute_script("arguments[0].click()", element)
 
             time.sleep(3)
             delete_data(driver,url, i,3)
         elif i == '輸入電力 C2' :
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="一般用電 B.3.2.a"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="一般用電 B.3.2.a"]')))
             driver.execute_script("arguments[0].click()", element)
             
             delete_elec(driver,url)
             time.sleep(3)
         elif i == '輸入蒸汽 C2' :
-            
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
+            link.click()
             delete_steam(driver,url)
-            time.sleep(3)
+            time.sleep(1)
         else:   
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()     
             delete_data(driver,url,i,0)
-            driver.get(url)
+
 
 
 def delete_data(driver,url,i,rfg_or_fire):
-    checkbox = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'span.anticon.anticon-delete'))) 
-    checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.anticon.anticon-delete')))
-    driver.execute_script("arguments[0].click();", checkbox)
-    time.sleep(2)
-    checkbox = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous'))) 
-    checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
-    driver.execute_script("arguments[0].click();", checkbox)
-    time.sleep(3)
-    if rfg_or_fire == 1:
-        catch_response(driver,'人為逸散 C1(冷媒設備)')
-    elif rfg_or_fire == 2:
-        catch_response(driver,'人為逸散 C1(消防設備)')
+    #判斷是否還有需要刪除的
+    while True:
+        try:
+            checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.anticon.anticon-delete')))
+            driver.execute_script("arguments[0].click();", checkbox)
+            time.sleep(1)
+            checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
+            driver.execute_script("arguments[0].click();", checkbox)
+            if rfg_or_fire == 1:
+                catch_response(driver,'人為逸散 C1(冷媒設備)')
+            elif rfg_or_fire == 2:
+                catch_response(driver,'人為逸散 C1(消防設備)')
+            elif rfg_or_fire == 0:
+                catch_response(driver,i)
+            time.sleep(1)
+        except:
+            if rfg_or_fire == 1:
+                print("人為逸散 C1(冷媒設備) 沒有資料刪除!")
+            elif rfg_or_fire == 2:
+                print("人為逸散 C1(消防設備) 沒有資料刪除!")
+            else :
+                print(i + " 沒有資料刪除!")
+            break
  
 
 def delete_workhour(driver,url):
-    driver.get(url+'directFugitiveEmission')
-    time.sleep(2) 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element.click()
-    time.sleep(2)
-    element = driver.find_element(By.XPATH, '//span[@class="anticon anticon-delete"]')
-    driver.execute_script("arguments[0].click();", element)
-    time.sleep(2)
-    checkbox = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous'))) 
-    checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
-    driver.execute_script("arguments[0].click();", checkbox)
-    time.sleep(3)
-    catch_response(driver,'工時計算 C1')
-    # driver.quit()
+    while True:
+
+        try:
+            # 查找並點擊選擇框
+            element = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-form-item-control-input-content"]')))
+            element.click()
+
+            # 等待刪除圖標出現並點擊
+            delete_icon = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//span[@class="anticon anticon-delete"]')))
+            driver.execute_script("arguments[0].click();", delete_icon)
+
+            # 等待確認刪除按鈕出現並點擊
+            confirm_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
+            driver.execute_script("arguments[0].click();", confirm_button)
+
+            # 捕獲刪除操作後的響應
+            catch_response(driver, '工時計算 C1')  # 確保這個函數定義正確
+        except:
+            print("工時計算 C1 沒有資料刪除!")
+            break
 
 def delete_elec(driver,url):
-    driver.get(url+'electricity')
-    time.sleep(3) 
+    time.sleep(1)
+    while True:
+        try:
+            # 確保每次操作前滾動頁面到中間
+            page_height = driver.execute_script(
+                "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+            driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
+            time.sleep(1)  # 確保滾動完成
 
-    page_height = driver.execute_script("return Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );")
-    # 往下滾動至頁面中間
-    driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
-    
-    time.sleep(3)
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element.click()
-    # driver.execute_script("arguments[0].click();", element)
-    time.sleep(2)
-    element = driver.find_element(By.XPATH, '//span[@class="anticon anticon-delete"]')
-    driver.execute_script("arguments[0].click();", element)
-    time.sleep(2)
-    checkbox = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous'))) 
-    checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
-    driver.execute_script("arguments[0].click();", checkbox)
-    time.sleep(3)
-    catch_response(driver,'輸入電力 C1(一般用電)')
-    # driver.quit()
+            element = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '(//div[@class="ant-form-item-control-input-content"])[1]')))
+            element.click()
+            delete_icon = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//span[@class="anticon anticon-delete"]')))
+            driver.execute_script("arguments[0].click();", delete_icon)
+
+            confirm_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
+            driver.execute_script("arguments[0].click();", confirm_button)
+            catch_response(driver, '輸入電力 C1(一般用電)')
+        except:
+            driver.execute_script("window.scrollTo(0, 0);")
+            time.sleep(1)  # 確保滾動完成
+            print("輸入電力 C1(一般用電) 沒有資料刪除!")
+            break
     
 def delete_steam(driver,url):
-    driver.get(url+'steam')
     bye_steam(driver,url,0)
 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="蒸氣減項 B.3.2.b"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="蒸氣減項 B.3.2.b"]')))
     driver.execute_script("arguments[0].click()", element)
 
@@ -168,20 +176,25 @@ def delete_steam(driver,url):
     
 
 def bye_steam(driver,url,plus_or_minus):
-    time.sleep(2)
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
-    element.click()
-    time.sleep(2)
+    while True:
+        try:
+            element = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-form-item-control-input-content"]')))
+            element.click()
+            delete_icon = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//span[@class="anticon anticon-delete"]')))
+            driver.execute_script("arguments[0].click();", delete_icon)
 
-    element = driver.find_element(By.XPATH, '//span[@class="anticon anticon-delete"]')
-    driver.execute_script("arguments[0].click();", element)
-    time.sleep(2)
-    checkbox = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous'))) 
-    checkbox = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
-    driver.execute_script("arguments[0].click();", checkbox)
-    time.sleep(3)
-    if plus_or_minus==0:
-        catch_response(driver,'輸入蒸汽 C1(蒸氣加項)')
-    else:
-        catch_response(driver,'輸入蒸汽 C1(蒸氣減項)')
+            confirm_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'button.ant-btn.css-zjzpde.ant-btn-default.ant-btn-dangerous')))
+            driver.execute_script("arguments[0].click();", confirm_button)
+            if plus_or_minus == 0:
+                catch_response(driver, '輸入蒸汽 C1(蒸氣加項)')
+            else:
+                catch_response(driver, '輸入蒸汽 C1(蒸氣減項)')
+        except:
+            if plus_or_minus == 0:
+                print("輸入蒸汽 C1(蒸氣加項) 沒有資料刪除")
+            else:
+                print("輸入蒸汽 C1(蒸氣減項) 沒有資料刪除")
+            break

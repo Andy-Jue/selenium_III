@@ -30,18 +30,6 @@ def login_page(driver,user_id,user_pass):
         element = wait.until(EC.visibility_of_element_located((By.ID, "login_password")))   #輸入密碼
         element.send_keys(user_pass)
         time.sleep(5)
-        
-        
-        # silder = driver.find_element(By.CSS_SELECTOR,"div[class='ant-slider-handle']")
-        # # background_image = driver.find_element(By.CSS_SELECTOR,"img[class='mb-2']")
-        # # silder_image = driver.find_element(By.CSS_SELECTOR,"img[class='position-absolute start-0 top-0']")
-        # action = ActionChains(driver)
-        # action.click_and_hold(silder)
-        # action.move_by_offset(200, 0).perform()
-        # action.release().perform()
-        # time.sleep(3)
-    # element = wait.until(EC.visibility_of_element_located((By.ID, "login_verificationCode")))   #輸入驗證碼
-    # element.send_keys("success")
 
         checkbox = driver.find_element(By.CSS_SELECTOR, "input[type='checkbox']")  #勾選同意使用條款
         checkbox.click()
@@ -52,7 +40,7 @@ def login_page(driver,user_id,user_pass):
     # time.sleep(3)
 
         autotest_td = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//td[text()='測試盤查']"))   #要測試的盤查計畫名稱 或是 編號(地球醫生=A廠區)
+        EC.presence_of_element_located((By.XPATH, "//td[text()='user20000底下的user30000測試']"))   #要測試的盤查計畫名稱 或是 編號(地球醫生=A廠區)
     )
     
     # 找到父 <tr> 元素
@@ -105,7 +93,7 @@ def main():
         user_id ='user_65c008'
         user_pass = 'IIIComany!55665566'
     else :
-        user_id = 'user08000'
+        user_id = 'user30000'
         user_pass = 'IIIComany!55665566'
     login_page(driver,user_id,user_pass)   #自動登入至排放源輸入
     print("請問要自動測試何種功能? 1:新增 2:匯入舊有模版 3:匯入資策會模版 4:編輯 5:刪除 6:excel匯出 7:新增多個 8:計算總值" )

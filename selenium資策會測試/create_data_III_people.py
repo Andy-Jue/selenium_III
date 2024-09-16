@@ -30,29 +30,24 @@ value_to_send = ['A00', 'A000', 'B00', 'B000', 'C00', 'C000', 'D00', 'D000',
 
 def source_input_1(driver,url):
 
-    source_type = ['移動源 C1', '固定燃燒源 C1', '工業製程 C1', '人為逸散 C1', '其他關注類物質 C1', '輸入電力 C2']
+    source_type = ['人為逸散 C1','其他關注類物質 C1','輸入電力 C2','輸入蒸汽 C2']
 
     url = url+"/calculate/" 
     
     for i in source_type:
         if i == '人為逸散 C1':
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()
             
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="工時計算 B.2.2.d"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="工時計算 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
-            for j in range(3):
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
+            for j in range(1):
                 element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
                 element.click()
                 time.sleep(2)
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//input[@placeholder="請輸入人員類別"]')))
-                element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入人員類別"]')))
-                element.send_keys(str(random.randint(1, 1000)))
+                element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入  人員類別"]')))
+                element.send_keys("測試人員1")
                 time.sleep(2)
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
                 element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
                 driver.execute_script("arguments[0].click()", element)
                 
@@ -60,14 +55,11 @@ def source_input_1(driver,url):
                 workhour(driver,url,j)
             
             
-          
-            
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="冷媒設備 B.2.2.d"]')))
+
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="冷媒設備 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
             time.sleep(3)
-            for j in range(3):
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
+            for j in range(1):
                 element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
                 driver.execute_script("arguments[0].click()", element)
     
@@ -75,40 +67,30 @@ def source_input_1(driver,url):
                 input_data(driver, i,j,1)
 
    
-            element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="消防設備 B.2.2.d"]')))
             element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="消防設備 B.2.2.d"]')))
             driver.execute_script("arguments[0].click()", element)
             time.sleep(3)
-            for j in range(3):
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
+            for j in range(1):
                 element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
                 driver.execute_script("arguments[0].click()", element)
     
                 time.sleep(0.5)
                 input_data(driver, i,j,2)
         elif i == '輸入電力 C2':
-                link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-                link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+                link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
                 link.click()
-                
-                element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="一般用電 B.3.2.a"]')))
-                element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="一般用電 B.3.2.a"]')))
-                driver.execute_script("arguments[0].click()", element)
-                time.sleep(1)
+                time.sleep(3)
                 page_height = driver.execute_script("return Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );")
                 # 往下滾動至頁面中間
                 driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
                 time.sleep(3)
-                for j in range(3):
-                    element = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
+                for j in range(1):
                     element = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
                     element.click()
                     time.sleep(3)
-                    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//input[@placeholder="請輸入電號/用戶編號"]')))
-                    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入電號/用戶編號"]')))
-                    element.send_keys(str(random.randint(1, 1000)))
+                    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入  電號/用戶編號"]')))
+                    element.send_keys("測試人員1")
                     time.sleep(3)
-                    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
                     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
                     driver.execute_script("arguments[0].click()", element)
                     time.sleep(5)
@@ -124,8 +106,7 @@ def source_input_1(driver,url):
                 # time.sleep(0.5)
                 # green_elec(driver,url)
         elif i == '輸入蒸汽 C2':       
-                link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-                link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+                link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
                 link.click()
                 time.sleep(2)
                 steam(driver,url)
@@ -134,8 +115,7 @@ def source_input_1(driver,url):
                 
                
         else:
-            link = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, i)))
-            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))  
+            link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, i)))
             link.click()
             for j in range(3):
                 element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
@@ -328,7 +308,7 @@ def input_data(driver, source_type,index,rfg_or_fire):
         for i in input_elements:                     #把disable的先移除掉
             # print(i.get_attribute("disable"))
             if i.get_attribute("disabled") != None and i.get_attribute("id")!="validateOnly_referenceFile" and i.get_attribute("type")!="search":#上傳表單與是否屬生質能源
-                print("")
+                continue
             else:
                 new_inputelements.append(i)
         for input_element in new_inputelements:
@@ -344,13 +324,13 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( license_plate)
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_OriScalar":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( ''.join(random.choices(string.digits, k=4))) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(100)) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
-            elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
-                input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
-                input_element.send_keys(Keys.BACKSPACE)      #刪除
-                input_element.send_keys(str(random.randint(1, 100)))
-                time.sleep(0.5)
+            # elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
+            #     input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
+            #     input_element.send_keys(Keys.BACKSPACE)      #刪除
+            #     input_element.send_keys(str(random.randint(1, 100)))
+            #     time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ResponsibleUnit":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("不想上班") #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
@@ -362,11 +342,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 time.sleep(0.5)
     
             elif input_element.get_attribute("placeholder") == "請輸入數字":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(12))
                 time.sleep(0.5)
             
             elif input_element.get_attribute("placeholder") == "請輸入活動強度單位":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("Kg")
                 
             elif input_element.get_attribute("type")=="search":   #選單類 先click 再選 再click
         
@@ -397,7 +377,7 @@ def input_data(driver, source_type,index,rfg_or_fire):
                             element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[6]')))
                             element.click()
                             # time.sleep(0.5)
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
+                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2023')]")))
                     element.click()
                     # time.sleep(0.5)
                   
@@ -428,10 +408,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
             catch_response(driver,'人為逸散 C1(消防設備)')
-        elif rfg_or_fire == 3:
-            catch_response(driver, '輸入能源上游排放 C4(輸入電力上游)')
-        elif rfg_or_fire == 4:
-            catch_response(driver, '輸入能源上游排放 C4(其他輸入能源上游)')
         else:
             catch_response(driver, source_type)
         time.sleep(2)
@@ -456,7 +432,7 @@ def input_data(driver, source_type,index,rfg_or_fire):
         for i in input_elements:                     #把disable的先移除掉
             # print(i.get_attribute("disable"))
             if i.get_attribute("disabled") != None and i.get_attribute("id")!="validateOnly_referenceFile" and i.get_attribute("type")!="search":#上傳表單與是否屬生質能源
-                print("")
+                continue
             else:
                 new_inputelements.append(i)
         for input_element in new_inputelements:
@@ -472,13 +448,13 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( license_plate)
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_OriScalar":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( ''.join(random.choices(string.digits, k=4))) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( str(100)) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
-            elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
-                input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
-                input_element.send_keys(Keys.BACKSPACE)      #刪除
-                input_element.send_keys(str(random.randint(1, 100)))
-                time.sleep(0.5)
+            # elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
+            #     input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
+            #     input_element.send_keys(Keys.BACKSPACE)      #刪除
+            #     input_element.send_keys(str(random.randint(1, 100)))
+            #     time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ResponsibleUnit":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("不想上班") #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
@@ -490,11 +466,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 time.sleep(0.5)
     
             elif input_element.get_attribute("placeholder") == "請輸入數字":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(12))
                 time.sleep(0.5)
             
             elif input_element.get_attribute("placeholder") == "請輸入活動強度單位":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("Kg")
                 
             elif input_element.get_attribute("type")=="search":   #選單類 先click 再選 再click
         
@@ -525,7 +501,7 @@ def input_data(driver, source_type,index,rfg_or_fire):
                             element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[6]')))
                             element.click()
                             # time.sleep(0.5)
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
+                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2023')]")))
                     element.click()
                     # time.sleep(0.5)
                   
@@ -556,10 +532,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
             catch_response(driver,'人為逸散 C1(消防設備)')
-        elif rfg_or_fire == 3:
-            catch_response(driver, '輸入能源上游排放 C4(輸入電力上游)')
-        elif rfg_or_fire == 4:
-            catch_response(driver, '輸入能源上游排放 C4(其他輸入能源上游)')
         else:
             catch_response(driver, source_type)
         time.sleep(2)
@@ -598,13 +570,13 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( license_plate)
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_OriScalar":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( ''.join(random.choices(string.digits, k=4))) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( str(100)) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
-            elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
-                input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
-                input_element.send_keys(Keys.BACKSPACE)      #刪除
-                input_element.send_keys(str(random.randint(1, 100)))
-                time.sleep(0.5)
+            # elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
+            #     input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
+            #     input_element.send_keys(Keys.BACKSPACE)      #刪除
+            #     input_element.send_keys(str(random.randint(1, 100)))
+            #     time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ResponsibleUnit":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("不想上班") #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
@@ -616,11 +588,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 time.sleep(0.5)
     
             elif input_element.get_attribute("placeholder") == "請輸入數字":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(12))
                 time.sleep(0.5)
             
             elif input_element.get_attribute("placeholder") == "請輸入活動強度單位":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("Kg")
                 
             elif input_element.get_attribute("type")=="search":   #選單類 先click 再選 再click
         
@@ -656,7 +628,7 @@ def input_data(driver, source_type,index,rfg_or_fire):
                             element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[6]')))
                             element.click()
                             # time.sleep(0.5)
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
+                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2023')]")))
                     element.click()
                     # time.sleep(0.5)
                   
@@ -687,10 +659,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
             catch_response(driver,'人為逸散 C1(消防設備)')
-        elif rfg_or_fire == 3:
-            catch_response(driver, '輸入能源上游排放 C4(輸入電力上游)')
-        elif rfg_or_fire == 4:
-            catch_response(driver, '輸入能源上游排放 C4(其他輸入能源上游)')
         else:
             catch_response(driver, source_type)
         time.sleep(2)
@@ -729,13 +697,13 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(license_plate)
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_OriScalar":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( ''.join(random.choices(string.digits, k=4))) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(100)) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
-            elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
-                input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
-                input_element.send_keys(Keys.BACKSPACE)      #刪除
-                input_element.send_keys(str(random.randint(1, 100)))
-                time.sleep(0.5)
+            # elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
+            #     input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
+            #     input_element.send_keys(Keys.BACKSPACE)      #刪除
+            #     input_element.send_keys(str(random.randint(1, 100)))
+            #     time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ResponsibleUnit":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("不想上班") #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
@@ -747,11 +715,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 time.sleep(0.5)
     
             elif input_element.get_attribute("placeholder") == "請輸入數字":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(100))
                 time.sleep(0.5)
             
             elif input_element.get_attribute("placeholder") == "請輸入活動強度單位":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("Kg")
                 
             elif input_element.get_attribute("type")=="search":   #選單類 先click 再選 再click
         
@@ -774,29 +742,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
                     element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'溶劑噴霧劑及冷媒排放源')]")))
                     element.click()
                     time.sleep(0.5)
-                elif input_element.get_attribute("id")=="validateOnly_Area":
-                    input_element.click()
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'台灣')]")))
-                    element.click()
-                    time.sleep(0.5)
-                    try:
-                        element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[8]')))
-                        element.click()
-                        # time.sleep(0.5)
-                    except:
-                        try:
-                            element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[7]')))
-                            element.click()
-                            time.sleep(0.5)
-                        except:
-                            element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[6]')))
-                            element.click()
-                            # time.sleep(0.5)
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
-                    element.click()
-                    # time.sleep(0.5)
-                  
-                    
                 elif input_element.get_attribute("id")=="validateOnly_activityDataType":
                     input_element.click()
                     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '自動連續')]")))
@@ -813,12 +758,10 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 else:
                     continue  
                 time.sleep(1)
-            
-
-                    
         button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))    #送出
         button.click()
         time.sleep(2)
+
         if rfg_or_fire == 1:
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
@@ -831,11 +774,8 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver, source_type)
         time.sleep(2)
     elif  rfg_or_fire == 2:
-        global value_to_send_11
-        global value_to_send_12
-        
-        value_to_send_11 = increment_value(value_to_send_11)
-        value_to_send_12 = increment_value(value_to_send_12)
+        value_to_send[10] = increment_value(value_to_send[10])
+        value_to_send[11] = increment_value(value_to_send[11])
         license_plate = generate_license_plate()
         Process_fire(driver)
         equipment_fire(driver)
@@ -857,12 +797,12 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 new_inputelements.append(i)
         for input_element in new_inputelements:
             if input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ProcessInformation_SerialNumber":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send_11)
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send[10])
                 time.sleep(0.5)
     
             
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_EquipmentInformation_SerialNumber":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send_12)
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send[11])
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_EquipmentInformation_ProductModel":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(license_plate)
@@ -870,11 +810,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_OriScalar":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( ''.join(random.choices(string.digits, k=4))) #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
-            elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
-                input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
-                input_element.send_keys(Keys.BACKSPACE)      #刪除
-                input_element.send_keys(str(random.randint(1, 100)))
-                time.sleep(0.5)
+            # elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_DistributionRatioNumber":
+            #     input_element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
+            #     input_element.send_keys(Keys.BACKSPACE)      #刪除
+            #     input_element.send_keys(str(random.randint(1, 100)))
+            #     time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ResponsibleUnit":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("不想上班") #目前是生成數字,''.join(random.choices(string.ascii_letters, k=10 生成字母10個
                 time.sleep(0.5)
@@ -886,11 +826,11 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 time.sleep(0.5)
     
             elif input_element.get_attribute("placeholder") == "請輸入數字":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(str(12))
                 time.sleep(0.5)
             
             elif input_element.get_attribute("placeholder") == "請輸入活動強度單位":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(random.randint(1, 100))
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys("Kg")
                 
             elif input_element.get_attribute("type")=="search":   #選單類 先click 再選 再click
         
@@ -913,29 +853,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
                     element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'溶劑噴霧劑及冷媒排放源')]")))
                     element.click()
                     time.sleep(0.5)
-                elif input_element.get_attribute("id")=="validateOnly_Area":
-                    input_element.click()
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'台灣')]")))
-                    element.click()
-                    time.sleep(0.5)
-                    try:
-                        element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[8]')))
-                        element.click()
-                        # time.sleep(0.5)
-                    except:
-                        try:
-                            element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[7]')))
-                            element.click()
-                            time.sleep(0.5)
-                        except:
-                            element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH,  '(//div[@class="ant-cascader-menu-item-content"])[6]')))
-                            element.click()
-                            # time.sleep(0.5)
-                    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
-                    element.click()
-                    # time.sleep(0.5)
-                  
-                    
                 elif input_element.get_attribute("id")=="validateOnly_activityDataType":
                     input_element.click()
                     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '自動連續')]")))
@@ -952,9 +869,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
                 else:
                     continue  
                 time.sleep(1)
-            
-
-                    
         button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))    #送出
         button.click()
         time.sleep(2)
@@ -962,19 +876,12 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
             catch_response(driver,'人為逸散 C1(消防設備)')
-        elif rfg_or_fire == 3:
-            catch_response(driver, '輸入能源上游排放 C4(輸入電力上游)')
-        elif rfg_or_fire == 4:
-            catch_response(driver, '輸入能源上游排放 C4(其他輸入能源上游)')
         else:
             catch_response(driver, source_type)
         time.sleep(2)
     elif source_type =='其他關注類物質 C1':
-        global value_to_send_13
-        global value_to_send_14
-        
-        value_to_send_13 = increment_value(value_to_send_13)
-        value_to_send_14 = increment_value(value_to_send_14)
+        value_to_send[12] = increment_value(value_to_send[12])
+        value_to_send[13] = increment_value(value_to_send[13])
         license_plate = generate_license_plate()
         Process(driver)
         equipment(driver)
@@ -991,17 +898,17 @@ def input_data(driver, source_type,index,rfg_or_fire):
         for i in input_elements:                     #把disable的先移除掉
             # print(i.get_attribute("disable"))
             if i.get_attribute("disabled") != None and i.get_attribute("id")!="validateOnly_referenceFile" and i.get_attribute("type")!="search":#上傳表單與是否屬生質能源
-                print("")
+                continue
             else:
                 new_inputelements.append(i)
         for input_element in new_inputelements:
             if input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_ProcessInformation_SerialNumber":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send_13)
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(value_to_send[12])
                 time.sleep(0.5)
     
             
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_EquipmentInformation_SerialNumber":
-                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send_14)
+                WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys( value_to_send[13])
                 time.sleep(0.5)
             elif input_element.get_attribute("placeholder") == "請輸入"  and input_element.get_attribute("id") == "validateOnly_EquipmentInformation_ProductModel":
                 WebDriverWait(driver, 5).until(EC.visibility_of(input_element)).send_keys(license_plate)
@@ -1107,10 +1014,6 @@ def input_data(driver, source_type,index,rfg_or_fire):
             catch_response(driver,'人為逸散 C1(冷媒設備)')
         elif rfg_or_fire == 2:
             catch_response(driver,'人為逸散 C1(消防設備)')
-        elif rfg_or_fire == 3:
-            catch_response(driver, '輸入能源上游排放 C4(輸入電力上游)')
-        elif rfg_or_fire == 4:
-            catch_response(driver, '輸入能源上游排放 C4(其他輸入能源上游)')
         else:
             catch_response(driver, source_type)
         time.sleep(2)
@@ -1132,22 +1035,18 @@ def workhour(driver,url,j):
     element.send_keys(value_to_send[6])
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="EquipmentInformation_SerialNumber"]')
     element.send_keys(value_to_send[7])
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmissionDescription"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmissionDescription"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '廢水排放源')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '自動連續量測')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '製造廠提供')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '有進行外部校正或有多組數據茲佐證者')]")))
@@ -1157,9 +1056,9 @@ def workhour(driver,url,j):
     for i,element in enumerate(input_elements[8:]):
         if i<96:
             value_to_input = random.randint(1, 20)
-            element.send_keys(value_to_input)
+            element.send_keys(str(100))
         else:
-            value_to_input = "哈哈哈"
+            value_to_input = "下班"
             element.send_keys(value_to_input)
     time.sleep(3) 
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '儲存')]")))
@@ -1170,11 +1069,8 @@ def workhour(driver,url,j):
     catch_response(driver,'人為逸散 C1(工時計算)')
     
 def elec(driver,url,index):
-    global value_to_send_15
-    global value_to_send_16
-    
-    value_to_send_15 = increment_value(value_to_send_15)
-    value_to_send_16 = increment_value(value_to_send_16)
+    value_to_send[14] = increment_value(value_to_send[14])
+    value_to_send[15] = increment_value(value_to_send[15])
     
 
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '編輯')]")))
@@ -1186,15 +1082,15 @@ def elec(driver,url,index):
     element.click()
     element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'台灣')]")))
     element.click()
-    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2022')]")))
+    element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'2023')]")))
     element.click()
     Process_1(driver)
     time.sleep(1)
     equipment_2(driver)
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="ProcessInformation_SerialNumber"]')
-    element.send_keys(value_to_send_15)
+    element.send_keys(value_to_send[14] )
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="EquipmentInformation_SerialNumber"]')
-    element.send_keys(value_to_send_16)
+    element.send_keys(value_to_send[15] )
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-status-success ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-status-success ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element.click()
@@ -1218,7 +1114,7 @@ def elec(driver,url,index):
             value_to_input = random.randint(1, 20)
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
-            element.send_keys(value_to_input)
+            element.send_keys(str(100))
         else:
             value_to_input ="哈哈哈"
             element.send_keys(value_to_input)
@@ -1249,9 +1145,9 @@ def green_elec(driver,url):
             value_to_input = random.randint(1, 20)
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
-            element.send_keys(value_to_input)
+            element.send_keys(str(100))
         else:
-            value_to_input = '哈哈'
+            value_to_input = '下班'
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
             element.send_keys(value_to_input)
@@ -1264,28 +1160,24 @@ def green_elec(driver,url):
     catch_response(driver,'輸入電力 C2(綠電)')   #抓response
     
 def steam(driver,url):
-    time.sleep(1)
-    for j in range(5):
+    time.sleep(5)
+    for j in range(1):
         time.sleep(1)
         page_height = driver.execute_script("return Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );")
         # 往下滾動至頁面中間
         driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
         time.sleep(3)
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
         element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
         element.click()
     
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//input[@placeholder="請輸入蒸氣編號"]')))
-        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入蒸氣編號"]')))
-        element.send_keys(str(random.randint(1, 1000)))
+        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入  蒸氣編號"]')))
+        element.send_keys("測試人員1(加項)")
         time.sleep(1)
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
         element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
         driver.execute_script("arguments[0].click()", element)
         time.sleep(5)
         steam_input_1(driver,url,j,0)   #做蒸氣加項
     time.sleep(1)
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[text()="蒸氣減項 B.3.2.b"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[text()="蒸氣減項 B.3.2.b"]')))
     driver.execute_script("arguments[0].click()", element)
     time.sleep(2)
@@ -1293,33 +1185,24 @@ def steam(driver,url):
     # 往下滾動至頁面中間
     driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
     time.sleep(5)
-    for j in range(3):
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
+    for j in range(1):
         element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
         element.click()
-    
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//input[@placeholder="請輸入  蒸氣編號"]')))
-        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入  蒸氣編號"]')))
-        element.send_keys(str(random.randint(1, 1000)))
         time.sleep(1)
-        element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '新增')]")))
+        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="請輸入  蒸氣編號"]')))
+        element.send_keys("測試人員1(減項)")
+        time.sleep(1)
         element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '新增')]")))
         driver.execute_script("arguments[0].click()", element)
         time.sleep(5)
         steam_input_2(driver,url,j,1)    #做蒸氣減項
 
 def steam_input_1(driver,url,index,rfg_or_fire):
-    global value_to_send_17
-    global value_to_send_18
-    
-    value_to_send_17 = increment_value(value_to_send_17)
-    value_to_send_18 = increment_value(value_to_send_18) 
-
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '編輯')]")))
+    value_to_send[16] = increment_value(value_to_send[16])
+    value_to_send[17] = increment_value(value_to_send[17])
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '編輯')]")))
     driver.execute_script("arguments[0].click()", element)
 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-cascader ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-cascader ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
     element.click()
     element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'台灣')]")))
@@ -1330,25 +1213,21 @@ def steam_input_1(driver,url,index,rfg_or_fire):
     time.sleep(1)
     equipment_2(driver)
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="ProcessInformation_SerialNumber"]')
-    element.send_keys(value_to_send_17)
+    element.send_keys(value_to_send[16] )
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="EquipmentInformation_SerialNumber"]')
-    element.send_keys(value_to_send_18)
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ElecDescription"]')))
+    element.send_keys(value_to_send[17] )
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ElecDescription"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '離網')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '間歇量測')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '國際/資料庫')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '有進行內部校正或經過會計簽證等証明者')]")))
@@ -1361,14 +1240,13 @@ def steam_input_1(driver,url,index,rfg_or_fire):
             value_to_input = random.randint(1, 20)
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
-            element.send_keys(value_to_input)
+            element.send_keys(str(100))
         else:
-            value_to_input = '哈哈'
+            value_to_input = '下班'
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
             element.send_keys(value_to_input)
     time.sleep(2) 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '儲存')]")))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '儲存')]")))
     driver.execute_script("arguments[0].click()", element)    
     time.sleep(3)
@@ -1377,21 +1255,16 @@ def steam_input_1(driver,url,index,rfg_or_fire):
     elif rfg_or_fire == 1:
         catch_response(driver,'輸入蒸汽 C2(蒸氣減項))')
 def steam_input_2(driver,url,index,rfg_or_fire):
-    global value_to_send_19
-    global value_to_send_20
-    
-    value_to_send_19 = increment_value(value_to_send_19)
-    value_to_send_20 = increment_value(value_to_send_20)
+    value_to_send[18] = increment_value(value_to_send[18])
+    value_to_send[19] = increment_value(value_to_send[19])
     page_height = driver.execute_script("return Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );")
     # 往下滾動至頁面中間
     driver.execute_script(f"window.scrollTo(0, {page_height // 3});")
     time.sleep(2)
     
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '編輯')]")))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '編輯')]")))
     driver.execute_script("arguments[0].click()", element)
 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-cascader ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-cascader ant-select-in-form-item ant-select-single ant-select-show-arrow"]')))
     element.click()
     element = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'台灣')]")))
@@ -1402,25 +1275,21 @@ def steam_input_2(driver,url,index,rfg_or_fire):
     time.sleep(1)
     equipment_2(driver)
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="ProcessInformation_SerialNumber"]')
-    element.send_keys(value_to_send_19)
+    element.send_keys(value_to_send[18] )
     element = driver.find_element(By.XPATH, '//input[@placeholder="請輸入" and @id="EquipmentInformation_SerialNumber"]')
-    element.send_keys(value_to_send_20)
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ElecDescription"]')))
+    element.send_keys(value_to_send[19] )
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ElecDescription"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '離網')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="ActivityDataType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '間歇量測')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="EmitParaType"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '國際/資料庫')]")))
     element.click()
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"][@name="InstrumentCalibrationSet"]')))
     element.click()
     element = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '有進行內部校正或經過會計簽證等証明者')]")))
@@ -1433,14 +1302,13 @@ def steam_input_2(driver,url,index,rfg_or_fire):
             value_to_input = random.randint(1, 20)
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
-            element.send_keys(value_to_input)
+            element.send_keys(str(100))
         else:
-            value_to_input = '哈哈'
+            value_to_input = '下班'
             element.send_keys(Keys.CONTROL, 'a')   #crtl+A 全選
             element.send_keys(Keys.BACKSPACE)      #刪除
             element.send_keys(value_to_input)
     time.sleep(2) 
-    element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '儲存')]")))
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), '儲存')]")))
     driver.execute_script("arguments[0].click()", element)    
     time.sleep(5)
